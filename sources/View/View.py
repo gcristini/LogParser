@@ -6,6 +6,7 @@ from tkinter import filedialog
 from tkinter.tix import WINDOW
 from turtle import title
 from View import ViewProperties
+import os
 
 class View():
     def __init__(self, parent):        
@@ -18,7 +19,7 @@ class View():
         return
 
     def _createView(self, parent):
-                # Configure Root
+        # Configure Root
         self.root = parent                
         self.root.configure(ViewProperties.root_configprop)
         self.root.resizable(False, False)
@@ -48,13 +49,13 @@ class View():
         self.filter_entry.place(ViewProperties.filter_entry_placeprop)
 
         self.search_button = Button(self.search_frame)
-        self.search_button.configure(ViewProperties.search_button_configprop)
+        self.search_button.configure(ViewProperties.search_button_configprop, command=self._filter_log)
         self.search_button.place(ViewProperties.search_button_placeprop)
 
 
         # Create widgets for function frame
         self.import_button = Button(self.function_frame)
-        self.import_button.configure(ViewProperties.import_button_configprop, command=self._importLog)
+        self.import_button.configure(ViewProperties.import_button_configprop, command=self._import_log)
         self.import_button.place(ViewProperties.import_button_placeprop)     
            
 
@@ -73,29 +74,45 @@ class View():
         self.scrollbar_y.pack(ViewProperties.display_scrollbar_y_packprop)
 
         self.display_textbox = Text(self.display_frame)
-        self.display_textbox.configure(ViewProperties.display_textbox_configprop ,wrap= None, xscrollcommand=self.scrollbar_x.set, yscrollcommand=self.scrollbar_y.set)
+        self.display_textbox.configure(ViewProperties.display_textbox_configprop, xscrollcommand=self.scrollbar_x.set, yscrollcommand=self.scrollbar_y.set)        
         self.display_textbox.pack(ViewProperties.display_textbox_packprop)
 
         self.scrollbar_x.config(command=self.display_textbox.xview)
         self.scrollbar_y.config(command=self.display_textbox.yview)
         return
 
-    def setController(self, controller):
-        self._controller=controller
-
-    def _importLog(self):
+    ### Callbacks
+    def _import_log(self):
         if (self._controller):
             self._controller.import_log(filedialog.askopenfilename())
         return
 
+    def _export_log(self):
+        if (self._controller):
+            pass
+
+    def _filter_log(self):
+        if (self._controller):
+            filter_words = self.filter_entry.get().split(";")            
+            self._controller.filter_log(filter_words)
+            pass
+
+    def setController(self, controller):
+        self._controller=controller
+
+
+
     def update_display_textbox(self, text:str = "", append:bool = False):
+        self.display_textbox.configure(state=NORMAL)
+        
         if append:
             pass
         else:
-            self.display_textbox.configure(state=NORMAL)
-            self.display_textbox.delete(INSERT, END)
-            self.display_textbox.insert(INSERT, text)
+            self.display_textbox.delete("1.0","end")   
+            self.display_textbox.insert(INSERT, text)        
             self.display_textbox.configure(state=DISABLED)
+            
+            
         return
 
 

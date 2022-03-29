@@ -6,16 +6,15 @@ from tkinter.ttk import *
 # *******************************************
 # *************    CONSTANTS    ************* 
 # *******************************************
-
 # ROOT
 __ROOT_TITLE = "LogParser"
-__ROOT_WIDTH = 1200
-__ROOT_HEIGHT= 800
+__ROOT_WIDTH = 1880
+__ROOT_HEIGHT= 980
 
-__ROOT_RELMARGIN_TOP = 0.1
-__ROOT_RELMARGIN_BOTTOM = 0.05
-__ROOT_RELMARGIN_LEFT = 0.03
-__ROOT_RELMARGIN_RIGHT = 0.03
+__ROOT_RELMARGIN_TOP = 0.01
+__ROOT_RELMARGIN_BOTTOM = 0.01
+__ROOT_RELMARGIN_LEFT = 0.01
+__ROOT_RELMARGIN_RIGHT = 0.01
 
 __ROOT_BACKGROUND = "#2d2d2d"
 __FRAME_BACKGROUND = "#2d2d2d"
@@ -30,8 +29,8 @@ root_configprop = {
 # SEARCH FRAME
 __SEARCH_FRAME_RELX = __ROOT_RELMARGIN_LEFT
 __SEARCH_FRAME_RELY = __ROOT_RELMARGIN_TOP
-__SEARCH_FRAME_RELHEIGHT = 0.09
-__SEARCH_FRAME_RELWIDTH = 0.8
+__SEARCH_FRAME_RELHEIGHT = 0.065
+__SEARCH_FRAME_RELWIDTH = 0.6
 
 __SEARCH_FRAME_MARGIN_TOP = 0.15
 __SEARCH_FRAME_MARGIN_BOTTOM = 0.15
@@ -53,9 +52,10 @@ searchframe_placeprop = {
 
 
 # FUNCTION FRAME
-__FUNCTION_FRAME_RELX = __ROOT_RELMARGIN_LEFT + __SEARCH_FRAME_RELWIDTH + 0.02
+__SEARCH_FUNCTION_FRAME_SPACE = 0.3
+__FUNCTION_FRAME_RELX = __ROOT_RELMARGIN_LEFT + __SEARCH_FRAME_RELWIDTH + __SEARCH_FUNCTION_FRAME_SPACE
 __FUNCTION_FRAME_RELY = __ROOT_RELMARGIN_TOP + 0.01
-__FUNCTION_FRAME_RELHEIGHT = 0.1
+__FUNCTION_FRAME_RELHEIGHT = 0.08
 __FUNCTION_FRAME_RELWIDTH = 1-__FUNCTION_FRAME_RELX-__ROOT_RELMARGIN_RIGHT
 
 __FUNCTION_FRAME_MARGIN_TOP = 0.15
@@ -97,9 +97,10 @@ __BACK_BUTTON_RELY = __SEARCH_FRAME_MARGIN_TOP
 __BACK_BUTTON_RELHEIGHT = 1 - __SEARCH_FRAME_MARGIN_TOP - __SEARCH_FRAME_MARGIN_BOTTOM
 __BACK_BUTTON_RELWIDTH = 0.07
 
-back_button_configprop = {}
-back_button_placeprop = {
-    # "image" : __BACK_BUTTON_PATH
+back_button_configprop = {
+    "text": "back",    
+}
+back_button_placeprop = {    
     "relx": __BACK_BUTTON_RELX, 
     "rely": __BACK_BUTTON_RELY, 
     "relheight": __BACK_BUTTON_RELHEIGHT,
@@ -112,9 +113,10 @@ __SEARCH_BUTTON_RELX = 1 - __SEARCH_FRAME_MARGIN_RIGHT - __SEARCH_BUTTON_RELWIDT
 __SEARCH_BUTTON_RELY = __SEARCH_FRAME_MARGIN_TOP
 __SEARCH_BUTTON_RELHEIGHT = 1 - __SEARCH_FRAME_MARGIN_TOP - __SEARCH_FRAME_MARGIN_BOTTOM
 
-search_button_configprop = {}
-search_button_placeprop = {
-    # "image" : __SEARCH_BUTTON_PATH
+search_button_configprop = {
+    "text": "search",    
+}
+search_button_placeprop = {    
     "relx": __SEARCH_BUTTON_RELX, 
     "rely": __SEARCH_BUTTON_RELY, 
     "relheight": __SEARCH_BUTTON_RELHEIGHT,
@@ -137,7 +139,7 @@ filter_entry_placeprop = {
 
 
 import_button_configprop = {
-    "text": "import",    
+    "text": "import"
 }
 import_button_placeprop = {
     "relx": __FUNCTION_FRAME_MARGIN_LEFT,
@@ -161,18 +163,12 @@ display_textbox_configprop = {
     "height": int(__ROOT_HEIGHT*__DISPLAY_FRAME_RELHEIGHT),
     "width": int(__ROOT_WIDTH * __DISPLAY_FRAME_RELWIDTH),
     "state": DISABLED,
-    "wrap": None
+    "wrap": "none"
 }
-# display_textbox_placeprop = {
-#     "relx": 0.01,
-#     "rely": 0.01,
-#     "relheight": 0.98,
-#     "relwidth": 0.5
-# }
 
 display_textbox_packprop = {
    "fill": BOTH,
-   "expand": 0
+   "expand": 0   
 }
 
 display_scrollbar_x_configprop={
@@ -182,7 +178,6 @@ display_scrollbar_x_packprop={
     "side": BOTTOM,
     "fill": "x"
 }
-
 display_scrollbar_y_configprop={
     "orient": VERTICAL
 }

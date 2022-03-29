@@ -7,14 +7,15 @@ class Controller:
         self._view = view
         return
 
-    def search_in_log(self):
+    def filter_log(self, words:list):
+        self._view.update_display_textbox(text=self._model.filter_log(words), append=False)        
         pass
 
     def export_log(self):
         pass
         
-    def import_log(self, filePath: str):        
-        self._view.update_display_textbox(text=self._model.import_log(filePath).readlines(), append = False)
+    def import_log(self, filePath: str):
+        self._view.update_display_textbox(text=self._model.import_log(filePath), append = False)
 
         pass
 
