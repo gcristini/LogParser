@@ -41,7 +41,7 @@ class View():
 
         # Create widgets for search frame
         self.back_button = Button(self.search_frame)
-        self.back_button.configure(ViewProperties.back_button_configprop)
+        self.back_button.configure(ViewProperties.back_button_configprop, command=self._go_back)
         self.back_button.place(ViewProperties.back_button_placeprop)
 
         self.filter_entry = Entry(self.search_frame)
@@ -84,23 +84,25 @@ class View():
     ### Callbacks
     def _import_log(self):
         if (self._controller):
-            self._controller.import_log(filedialog.askopenfilename())
-        return
+            self._controller.import_log(filedialog.askopenfilename())        
 
     def _export_log(self):
         if (self._controller):
-            pass
+           pass
 
     def _filter_log(self):
         if (self._controller):
             filter_words = self.filter_entry.get().split(";")            
             self._controller.filter_log(filter_words)
-            pass
+                   
+    def _go_back(self):
+        if (self._controller):
+            self._controller.go_back()
 
+    
+    ###
     def setController(self, controller):
         self._controller=controller
-
-
 
     def update_display_textbox(self, text:str = "", append:bool = False):
         self.display_textbox.configure(state=NORMAL)

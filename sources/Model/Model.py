@@ -1,80 +1,76 @@
 
+
 class Model():
-    def __init__(self):
-        self._log_file_raw = list();
-        self._log_file_filtered = list()
-        self._log_file_to_display = ""
+    def __init__(self, database):        
+        self.db = database
         return
 
-    @property
-    def log_file_raw(self):
-        return self._log_file_raw
-
-    @log_file_raw.setter
-    def log_file_raw(self, log_file):
-        self._log_file_raw = log_file
-
-    @property
-    def log_file_filtered(self):
-        return self._log_file_filtered
-
-    @log_file_filtered.setter
-    def log_file_raw(self, log_file):
-        self._log_file_filtered = log_file
-
-    @property
-    def log_file_to_display(self):
-        return self.log_file_to_display
-
-    @log_file_to_display.setter
-    def log_file_raw(self, log_file):
-        self.log_file_to_display = log_file
-
-
     def import_log(self, file_name: str):        
-        self.__clear_buffers()
+        # self.__clear_buffers()
 
         with open(file_name, "r") as file:
-            self._log_file_raw = file.readlines()
+            self.db.log_file_raw = file.readlines()
 
-            # Concat all lines to good format for view
-            for line in self._log_file_raw:
-                self._log_file_to_display+=line
+            self.db.log_file_to_display = list(self.db.log_file_raw)
 
-        return self._log_file_to_display
+        # Concat all lines to good format for view
+        return "".join(line for line in self.db.log_file_to_display)
 
-    def filter_log(self, words:list):        
-        self._log_file_filtered=list()
-        self._log_file_to_display=""
-
-        for line in self._log_file_raw:
+    def filter_log(self, words:list):                        
+        tmp_log_file=[]
+        if (len(self.db.log_file_filtered_buffer) == 0):
+            log_to_filter = list(self.db.log_file_raw)
+        else:
+            log_to_filter = list(self.db.log_file_filtered_buffer[-1])
+            
+        for line in log_to_filter:
             word_found_counter = 0
             for word in words:
                 if word in line:
                     word_found_counter +=1
                 
             if word_found_counter == len(words):
-                self._log_file_filtered.append(line)
+                tmp_log_file.append(line)
                 pass
-
-        # Concat all lines to good format for view
-        for line in self._log_file_filtered:
-            self._log_file_to_display+=line
-
-        return self._log_file_to_display
-
-
-    # def export_file():
-    #     return
-
-    # def search(words):
-    #     return
-
-    # def get_log_to_display():        
-    #     return _log_file_to_display
-
-
-    def __clear_buffers(self):
+        
+        # Store log into buffer and in list to display
+        self.db.append_to_log_file_filtered_buffer(tmp_log_file)
+        self.db.log_file_to_display=list(tmp_log_file)
+        
+        # Concat log to good format for display        
+        return "".join(line for line in tmp_log_file)
+    
+    def get_previous_filtered_log(self):
+        ret = None
+        
+        if (len(self.db.log_file_filtered_buffer)>1):          
+            self.db.pop_from_log_file_filtered_buffer(-1)
+            ret = "".join(line for line in self.db.log_file_filtered_buffer[-1])
+        elif (len(self.db.log_file_filtered_buffer)==1):
+            if (len(self.db.log_file_raw)>0):
+                ret = "".join(line for line in self.db.log_file_raw)
+        else:
+            ret = None
+            
+        print (ret)
+        return ret
+    
+    def clear_log_data(self):
         self._log_file_raw = list()
-        self._log_file_filtered = list()
-        self._log_file_to_display = ""
+        self._log_file_filtered_buffer = list()
+        self._log_file_to_display = list()
+
+    # # def export_file():
+    # #     return
+
+    # # def search(words):
+    # #     return
+
+    # # def get_log_to_display():        
+    # #     return _log_file_to_display
+
+
+    # def __clear_buffers(self):
+    #     self._log_file_raw = list()
+    #     self._log_file_filtered = list()
+    #     self._log_file_to_display = ""
