@@ -11,10 +11,10 @@ class Controller:
         self._view.update_display_textbox(text=self._model.filter_log(words), append=False)        
 
     def export_log(self):
+        self._model.export_log()
         pass
         
-    def import_log(self, filePath: str):
-        self._model.clear_log_data()
+    def import_log(self, filePath: str):        
         self._view.update_display_textbox(text=self._model.import_log(filePath), append = False)
             
     def go_back(self):
@@ -23,14 +23,6 @@ class Controller:
         if log is not None:
             self._view.update_display_textbox(log, append=False)       
 
-
-# def search_button_callback():
-#     return
-
-# def back_button_callback():
-#     return
-
-
-
+    
 # def export_button_callback():
 #     return

@@ -60,7 +60,7 @@ class View():
            
 
         self.export_button = Button(self.function_frame)
-        self.export_button.configure(ViewProperties.export_button_configprop)
+        self.export_button.configure(ViewProperties.export_button_configprop, command=self._export_log)
         self.export_button.place(ViewProperties.export_button_placeprop)
 
 
@@ -92,12 +92,17 @@ class View():
 
     def _filter_log(self):
         if (self._controller):
-            filter_words = self.filter_entry.get().split(";")            
+            filter_words = self.filter_entry.get().split(";")  
+            print (filter_words)          
             self._controller.filter_log(filter_words)
                    
     def _go_back(self):
         if (self._controller):
             self._controller.go_back()
+            
+    def _export_log(self):
+        if (self._controller):
+            self._controller.export_log()
 
     
     ###
